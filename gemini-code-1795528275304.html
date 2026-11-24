@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="santa">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grade 11 Chemistry: Holiday Stoichiometry Lab</title>
+  <style>
+    :root {
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Helvetica, Arial, sans-serif;
+      --radius: 16px;
+      --radius-sm: 10px;
+      --shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+      --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Theme 1: Santa Claus with Rudolf */
+    [data-theme="santa"] {
+      --bg-grad: linear-gradient(135deg, #7f1d1d 0%, #b91c1c 45%, #14532d 100%);
+      --card-bg: rgba(255, 251, 245, 0.96);
+      --card-border: #fcd34d;
+      --text-main: #1f2937;
+      --text-muted: #4b5563;
+      --accent: #dc2626;
+      --accent-hover: #991b1b;
+      --secondary: #15803d;
+      --gold: #d97706;
+      --badge-bg: #fef3c7;
+      --input-bg: #ffffff;
+      --header-text: #ffffff;
+    }
+
+    /* Theme 2: Snowman */
+    [data-theme="snowman"] {
+      --bg-grad: linear-gradient(135deg, #0c4a6e 0%, #0284c7 50%, #bae6fd 100%);
+      --card-bg: rgba(248, 250, 252, 0.96);
+      --card-border: #7dd3fc;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --accent: #0284c7;
+      --accent-hover: #0369a1;
+      --secondary: #ea580c;
+      --gold: #0284c7;
+      --badge-bg: #e0f2fe;
+      --input-bg: #ffffff;
+      --header-text: #ffffff;
+    }
+
+    /* Theme 3: Christmas Chimney */
+    [data-theme="chimney"] {
+      --bg-grad: linear-gradient(135deg, #451a03 0%, #7c2d12 50%, #1c1917 100%);
+      --card-bg: rgba(255, 247, 237, 0.96);
+      --card-border: #fb923c;
+      --text-main: #292524;
+      --text-muted: #57534e;
+      --accent: #c2410c;
+      --accent-hover: #9a3412;
+      --secondary: #15803d;
+      --gold: #d97706;
+      --badge-bg: #ffedd5;
+      --input-bg: #ffffff;
+      --header-text: #fff7ed;
+    }
+
+    /* Theme 4: Northern Aurora */
+    [data-theme="aurora"] {
+      --bg-grad: linear-gradient(135deg, #0f172a 0%, #1e1b4b 35%, #065f46 75%, #4c1d95 100%);
+      --card-bg: rgba(15, 23, 42, 0.92);
+      --card-border: #34d399;
+      --text-main: #f8fafc;
+      --text-muted: #cbd5e1;
+      --accent: #10b981;
+      --accent-hover: #059669;
+      --secondary: #8b5cf6;
+      --gold: #fbbf24;
+      --badge-bg: rgba(16, 185, 129, 0.18);
+      --input-bg: #1e293b;
+      --header-text: #ecfdf5;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-grad);
+      background-attachment: fixed;
+      color: var(--text-main);
+      min-height: 100vh;
+      padding: 20px 16px 60px;
+      line-height: 1.5;
+      touch-action: manipulation;
+    }
+
+    .container {
+      max-width: 920px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      color: var(--header-text);
+      margin-bottom: 22px;
+    }
+
+    header h1 {
+      font-size: clamp(1.6rem, 3.5vw, 2.3rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    header p {
+      font-size: 0.98rem;
+      opacity: 0.92;
+      margin-top: 4px;
+    }
+
+    /* Controls Bar */
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--card-bg);
+      border: 2px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      margin-bottom: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .toolbar-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    label.inline-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    select, input[type="text"], input[type="number"] {
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+      padding: 9px 12px;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid #cbd5e1;
+      background: var(--input-bg);
+      color: var(--text-main);
+      outline: none;
+      transition: var(--transition);
+    }
+
+    select:focus, input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.18);
+    }
+
+    /* Buttons */
+    button, .btn-label {
+      font-family: var(--font-sans);
+      font-size: 0.92rem;
+      font-weight: 700;
+      padding: 10px 16px;
+      border-radius: var(--radius-sm);
+      border: none;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      min-height: 42px;
+      user-select: none;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #ffffff;
+    }
+    .btn-primary:hover:not(:disabled) {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: var(--secondary);
+      color: #ffffff;
+    }
+    .btn-secondary:hover:not(:disabled) {
+      filter: brightness(0.92);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text-main);
+      border: 1.5px solid var(--card-border);
+    }
+    .btn-outline:hover:not(:disabled) {
+      background: var(--badge-bg);
+    }
+
+    button:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--card-bg);
+      border: 2px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 22px;
+      margin-bottom: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .card h2 {
+      font-size: 1.25rem;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    /* Selfie Box */
+    .selfie-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 14px;
+      border: 2px dashed var(--card-border);
+      border-radius: var(--radius-sm);
+      background: var(--badge-bg);
+    }
+
+    .selfie-preview-wrap {
+      position: relative;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: #1e293b;
+      border: 4px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #94a3b8;
+      font-size: 0.85rem;
+      text-align: center;
+    }
+
+    .selfie-preview-wrap video,
+    .selfie-preview-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .master-overlay-badge {
+      position: absolute;
+      bottom: 4px;
+      right: 4px;
+      background: linear-gradient(135deg, #f59e0b, #fde047);
+      color: #78350f;
+      font-weight: 900;
+      font-size: 0.72rem;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 2px solid #ffffff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+      display: none;
+    }
+
+    /* Progress & Part Tabs */
+    .part-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .part-tab {
+      flex: 1 1 130px;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      border: 2px solid var(--card-border);
+      background: var(--card-bg);
+      color: var(--text-main);
+      font-weight: 700;
+      font-size: 0.88rem;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .part-tab.active {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent);
+    }
+
+    .part-tab.completed {
+      border-color: var(--secondary);
+    }
+
+    /* Atomic Mass Reference */
+    .ref-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      background: var(--badge-bg);
+      margin-bottom: 16px;
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    .ref-chip {
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+    }
+
+    /* Question Items */
+    .question-item {
+      padding: 14px;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid rgba(148, 163, 184, 0.45);
+      margin-bottom: 12px;
+      background: var(--input-bg);
+    }
+
+    .question-item.correct {
+      border-color: #16a34a;
+      background: rgba(22, 163, 74, 0.08);
+    }
+
+    .question-item.incorrect {
+      border-color: #dc2626;
+      background: rgba(220, 38, 38, 0.08);
+    }
+
+    .eq-box {
+      font-family: "Courier New", Courier, monospace;
+      font-weight: 700;
+      font-size: 1.02rem;
+      padding: 6px 10px;
+      border-radius: 6px;
+      background: var(--badge-bg);
+      display: inline-block;
+      margin: 6px 0;
+    }
+
+    .mm-info {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .options-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .option-btn {
+      background: var(--card-bg);
+      color: var(--text-main);
+      border: 1.5px solid #94a3b8;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-weight: 600;
+    }
+
+    .option-btn.selected {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent);
+    }
+
+    .feedback-text {
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-top: 6px;
+    }
+
+    /* Badges Shelf */
+    .badges-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--badge-bg);
+      border: 1.5px solid var(--card-border);
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .badge-pill.master {
+      background: linear-gradient(135deg, #f59e0b, #fde047);
+      color: #78350f;
+      border-color: #d97706;
+    }
+
+    /* Summary Section */
+    .summary-status {
+      font-size: 1.5rem;
+      font-weight: 900;
+      padding: 8px 18px;
+      border-radius: 999px;
+      display: inline-block;
+      margin: 8px 0;
+    }
+
+    .status-passed {
+      background: #dcfce7;
+      color: #166534;
+      border: 2px solid #16a34a;
+    }
+
+    .status-failed {
+      background: #fee2e2;
+      color: #991b1b;
+      border: 2px solid #dc2626;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    canvas#exportCanvas {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1 id="themeTitle">🎅 Grade 11 Chemistry: Holiday Stoichiometry Lab</h1>
+      <p>Interactive Stoichiometry Assessment • Total: 25 Points • Passing Score: 20/25</p>
+    </header>
+
+    <!-- Top Toolbar: Theme, Sound, Save/Load -->
+    <div class="toolbar">
+      <div class="toolbar-group">
+        <label class="inline-label" for="themeSelect">🎄 Theme:</label>
+        <select id="themeSelect" aria-label="Select Christmas Theme">
+          <option value="santa">🎅 Santa Claus &amp; Rudolf</option>
+          <option value="snowman">⛄ Snowman Frost</option>
+          <option value="chimney">🔥 Christmas Chimney</option>
+          <option value="aurora">🌌 Northern Aurora</option>
+        </select>
+        <button type="button" id="soundToggle" class="btn-outline" title="Toggle Audio Feedback">🔊 Sound: ON</button>
+      </div>
+
+      <div class="toolbar-group">
+        <button type="button" id="saveProgressBtn" class="btn-secondary" disabled title="Complete a part to enable saving">
+          💾 Save Progress
+        </button>
+        <label class="btn-label btn-outline" for="loadProgressInput">
+          📂 Load Saved File
+        </label>
+        <input type="file" id="loadProgressInput" accept=".json" class="hidden" />
+      </div>
+    </div>
+
+    <!-- Student Profile & Selfie Card -->
+    <section class="card" id="profileCard">
+      <h2>🧑‍🔬 Student Profile &amp; Selfie</h2>
+      <div class="grid-2">
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          <div>
+            <label class="inline-label" for="studentName">Student Full Name</label>
+            <input type="text" id="studentName" placeholder="Enter your full name..." style="width:100%; margin-top:4px;" />
+          </div>
+          <div>
+            <label class="inline-label" for="studentSection">Grade 11 Section</label>
+            <select id="studentSection" style="width:100%; margin-top:4px;">
+              <option value="Daniel">Grade 11 - Daniel</option>
+              <option value="Ezekiel">Grade 11 - Ezekiel</option>
+            </select>
+          </div>
+          <div style="font-size:0.85rem; color:var(--text-muted);">
+            <strong>Device Activity Counter:</strong> Completed <span id="attemptCountDisplay">0</span> time(s) on this device.
+          </div>
+        </div>
+
+        <div class="selfie-box">
+          <div class="selfie-preview-wrap" id="selfieWrap">
+            <span id="selfiePlaceholder">No Selfie Yet</span>
+            <video id="cameraVideo" autoplay playsinline class="hidden"></video>
+            <img id="selfieImg" alt="Student Selfie" class="hidden" />
+            <div id="selfieMasterBadge" class="master-overlay-badge">🏆 MASTER</div>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; gap:8px; justify-content:center;">
+            <button type="button" id="startCameraBtn" class="btn-primary">📷 Open Camera</button>
+            <button type="button" id="captureBtn" class="btn-secondary hidden">📸 Take Selfie</button>
+            <label class="btn-label btn-outline" for="uploadSelfieInput">🖼️ Upload Photo</label>
+            <input type="file" id="uploadSelfieInput" accept="image/*" class="hidden" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Part Navigation -->
+    <nav class="part-nav" id="partNav">
+      <button type="button" class="part-tab active" data-part="1">Part 1 (0/5)</button>
+      <button type="button" class="part-tab" data-part="2">Part 2 (0/5)</button>
+      <button type="button" class="part-tab" data-part="3">Part 3 (0/5)</button>
+      <button type="button" class="part-tab" data-part="4">Part 4 (0/5)</button>
+      <button type="button" class="part-tab" data-part="5">Part 5 (0/5)</button>
+      <button type="button" class="part-tab" data-part="summary">🏆 Summary</button>
+    </nav>
+
+    <!-- Active Part Workspace -->
+    <section class="card" id="quizCard">
+      <h2 id="partTitle">Part 1: Identify Reagent &amp; Product</h2>
+      <p id="partInstructions" style="margin-bottom:14px; color:var(--text-muted); font-size:0.94rem;"></p>
+
+      <div id="atomicRef" class="ref-strip hidden">
+        <span style="width:100%; font-weight:800;">Atomic Masses (g/mol):</span>
+        <span class="ref-chip">H = 1.01</span>
+        <span class="ref-chip">C = 12.01</span>
+        <span class="ref-chip">N = 14.01</span>
+        <span class="ref-chip">O = 16.00</span>
+        <span class="ref-chip">Na = 22.99</span>
+        <span class="ref-chip">Mg = 24.31</span>
+        <span class="ref-chip">Cl = 35.45</span>
+        <span class="ref-chip">Ca = 40.08</span>
+      </div>
+
+      <div id="questionsContainer"></div>
+
+      <div style="display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between; margin-top:16px;">
+        <button type="button" id="submitPartBtn" class="btn-primary">✅ Check &amp; Complete Part</button>
+        <button type="button" id="nextPartBtn" class="btn-secondary hidden">➡️ Go to Next Part</button>
+      </div>
+    </section>
+
+    <!-- Summary Card -->
+    <section class="card hidden" id="summaryCard">
+      <h2>🎄 Activity Completion Summary</h2>
+      <div class="grid-2" style="align-items:center;">
+        <div>
+          <p><strong>Student Name:</strong> <span id="sumName">—</span></p>
+          <p><strong>Section:</strong> Grade 11 - <span id="sumSection">—</span></p>
+          <p><strong>Total Score:</strong> <span id="sumScore" style="font-size:1.25rem; font-weight:800;">0 / 25</span></p>
+          <p><strong>Activity Completed Count (Database):</strong> <span id="sumAttempts">0</span></p>
+          <div id="sumStatus" class="summary-status status-failed">INCOMPLETE</div>
+        </div>
+        <div style="display:flex; flex-direction:column; align-items:center;">
+          <div class="selfie-preview-wrap" style="width:160px; height:160px;">
+            <span id="sumSelfiePlaceholder">No Selfie</span>
+            <img id="sumSelfieImg" alt="Summary Selfie" class="hidden" />
+            <div id="sumMasterBadge" class="master-overlay-badge">🏆 MASTER</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;">
+        <strong>Part Breakdown:</strong>
+        <ul id="sumBreakdown" style="margin:8px 0 14px 20px;"></ul>
+      </div>
+
+      <div>
+        <strong>Badges Earned:</strong>
+        <div class="badges-grid" id="sumBadges"></div>
+      </div>
+
+      <div style="margin-top:22px; display:flex; flex-wrap:wrap; gap:12px;">
+        <button type="button" id="downloadSummaryBtn" class="btn-primary">
+          ⬇️ Click Here to Download the Summary
+        </button>
+        <button type="button" id="resetActivityBtn" class="btn-outline">
+          🔄 Start New Attempt
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <!-- Hidden Canvas for PNG Export -->
+  <canvas id="exportCanvas" width="900" height="620"></canvas>
+
+  <script>
+    /* =========================
+       1. AUDIO ENGINE (Speaker Output)
+       ========================= */
+    let soundEnabled = true;
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    let audioCtx = null;
+
+    function playTone(freq, duration = 0.14, type = "sine", delay = 0) {
+      if (!soundEnabled) return;
+      if (!audioCtx) audioCtx = new AudioCtx();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, audioCtx.currentTime + delay);
+      gain.gain.setValueAtTime(0.12, audioCtx.currentTime + delay);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + delay + duration);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(audioCtx.currentTime + delay);
+      osc.stop(audioCtx.currentTime + delay + duration);
+    }
+
+    function playSound(kind) {
+      if (kind === "correct") {
+        playTone(523.25, 0.12, "triangle", 0);
+        playTone(659.25, 0.16, "triangle", 0.1);
+      } else if (kind === "wrong") {
+        playTone(220, 0.2, "sawtooth", 0);
+      } else if (kind === "badge") {
+        playTone(523.25, 0.12, "triangle", 0);
+        playTone(659.25, 0.12, "triangle", 0.12);
+        playTone(783.99, 0.22, "triangle", 0.24);
+      } else if (kind === "master") {
+        [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => playTone(f, 0.2, "triangle", i * 0.12));
+      }
+    }
+
+    /* =========================
+       2. CURRICULUM DATA (25 Questions)
+       ========================= */
+    const PARTS = {
+      1: {
+        title: "Part 1: Identify the Reagent and Product",
+        badge: "🧪 Equation Explorer",
+        instructions: "Select the correct reagent (reactant) or product from each balanced chemical equation. (5 points)",
+        type: "mcq",
+        showRef: false,
+        questions: [
+          { eq: "2H₂ + O₂ → 2H₂O", prompt: "Which substance is the PRODUCT?", options: ["H₂", "O₂", "H₂O"], answer: "H₂O" },
+          { eq: "CH₄ + 2O₂ → CO₂ + 2H₂O", prompt: "Which substance is a REAGENT (reactant)?", options: ["CH₄", "CO₂", "H₂O"], answer: "CH₄" },
+          { eq: "N₂ + 3H₂ → 2NH₃", prompt: "Which substance is the PRODUCT?", options: ["N₂", "H₂", "NH₃"], answer: "NH₃" },
+          { eq: "2Na + Cl₂ → 2NaCl", prompt: "Which substance is a REAGENT (reactant)?", options: ["Cl₂", "NaCl", "Neither"], answer: "Cl₂" },
+          { eq: "CaCO₃ → CaO + CO₂", prompt: "Which substance is the REAGENT (reactant)?", options: ["CaCO₃", "CaO", "CO₂"], answer: "CaCO₃" }
+        ]
+      },
+      2: {
+        title: "Part 2: Molecular Mass of the Reagent",
+        badge: "⚖️ Reagent Weigher",
+        instructions: "Calculate the molecular mass (g/mol) of the specified REAGENT. Round your answer to 2 decimal places. (5 points)",
+        type: "num",
+        showRef: true,
+        questions: [
+          { eq: "2H₂ + O₂ → 2H₂O", prompt: "Molecular mass of reagent O₂ (g/mol):", answer: 32.00 },
+          { eq: "CH₄ + 2O₂ → CO₂ + 2H₂O", prompt: "Molecular mass of reagent CH₄ (g/mol):", answer: 16.05 },
+          { eq: "N₂ + 3H₂ → 2NH₃", prompt: "Molecular mass of reagent N₂ (g/mol):", answer: 28.02 },
+          { eq: "2Na + Cl₂ → 2NaCl", prompt: "Molecular mass of reagent Cl₂ (g/mol):", answer: 70.90 },
+          { eq: "CaCO₃ → CaO + CO₂", prompt: "Molecular mass of reagent CaCO₃ (g/mol):", answer: 100.09 }
+        ]
+      },
+      3: {
+        title: "Part 3: Molecular Mass of the Product",
+        badge: "🔬 Product Analyst",
+        instructions: "Calculate the molecular mass (g/mol) of the specified PRODUCT. Round your answer to 2 decimal places. (5 points)",
+        type: "num",
+        showRef: true,
+        questions: [
+          { eq: "2H₂ + O₂ → 2H₂O", prompt: "Molecular mass of product H₂O (g/mol):", answer: 18.02 },
+          { eq: "CH₄ + 2O₂ → CO₂ + 2H₂O", prompt: "Molecular mass of product CO₂ (g/mol):", answer: 44.01 },
+          { eq: "N₂ + 3H₂ → 2NH₃", prompt: "Molecular mass of product NH₃ (g/mol):", answer: 17.04 },
+          { eq: "2Na + Cl₂ → 2NaCl", prompt: "Molecular mass of product NaCl (g/mol):", answer: 58.44 },
+          { eq: "CaCO₃ → CaO + CO₂", prompt: "Molecular mass of product CaO (g/mol):", answer: 56.08 }
+        ]
+      },
+      4: {
+        title: "Part 4: Calculate Grams of Product from Reagent",
+        badge: "🎁 Product Synthesizer",
+        instructions: "Use the given molecular masses and balanced equation to find the grams of product formed. Round to 2 decimal places. (5 points)",
+        type: "num",
+        showRef: false,
+        questions: [
+          {
+            eq: "2H₂ + O₂ → 2H₂O",
+            mm: "Molecular Masses: H₂ = 2.02 g/mol | O₂ = 32.00 g/mol | H₂O = 18.02 g/mol",
+            prompt: "Given 10.00 g of H₂ (excess O₂), how many grams of H₂O are produced?",
+            answer: 89.21
+          },
+          {
+            eq: "N₂ + 3H₂ → 2NH₃",
+            mm: "Molecular Masses: N₂ = 28.02 g/mol | H₂ = 2.02 g/mol | NH₃ = 17.04 g/mol",
+            prompt: "Given 14.01 g of N₂ (excess H₂), how many grams of NH₃ are produced?",
+            answer: 17.04
+          },
+          {
+            eq: "2Na + Cl₂ → 2NaCl",
+            mm: "Molecular Masses: Na = 22.99 g/mol | Cl₂ = 70.90 g/mol | NaCl = 58.44 g/mol",
+            prompt: "Given 22.99 g of Na (excess Cl₂), how many grams of NaCl are produced?",
+            answer: 58.44
+          },
+          {
+            eq: "CH₄ + 2O₂ → CO₂ + 2H₂O",
+            mm: "Molecular Masses: CH₄ = 16.05 g/mol | O₂ = 32.00 g/mol | CO₂ = 44.01 g/mol",
+            prompt: "Given 32.10 g of CH₄ (excess O₂), how many grams of CO₂ are produced?",
+            answer: 88.02
+          },
+          {
+            eq: "CaCO₃ → CaO + CO₂",
+            mm: "Molecular Masses: CaCO₃ = 100.09 g/mol | CaO = 56.08 g/mol | CO₂ = 44.01 g/mol",
+            prompt: "Given 50.00 g of CaCO₃, how many grams of CaO are produced?",
+            answer: 28.01
+          }
+        ]
+      },
+      5: {
+        title: "Part 5: Calculate Grams of Reactant from Product",
+        badge: "⭐ Stoichiometry Pro",
+        instructions: "Use the given molecular masses and balanced equation to find the grams of reactant needed. Round to 2 decimal places. (5 points)",
+        type: "num",
+        showRef: false,
+        questions: [
+          {
+            eq: "2H₂ + O₂ → 2H₂O",
+            mm: "Molecular Masses: H₂ = 2.02 g/mol | O₂ = 32.00 g/mol | H₂O = 18.02 g/mol",
+            prompt: "To produce 36.04 g of H₂O, how many grams of O₂ are required?",
+            answer: 32.00
+          },
+          {
+            eq: "N₂ + 3H₂ → 2NH₃",
+            mm: "Molecular Masses: N₂ = 28.02 g/mol | H₂ = 2.02 g/mol | NH₃ = 17.04 g/mol",
+            prompt: "To produce 34.08 g of NH₃, how many grams of H₂ are required?",
+            answer: 6.06
+          },
+          {
+            eq: "2Na + Cl₂ → 2NaCl",
+            mm: "Molecular Masses: Na = 22.99 g/mol | Cl₂ = 70.90 g/mol | NaCl = 58.44 g/mol",
+            prompt: "To produce 116.88 g of NaCl, how many grams of Cl₂ are required?",
+            answer: 70.90
+          },
+          {
+            eq: "CH₄ + 2O₂ → CO₂ + 2H₂O",
+            mm: "Molecular Masses: CH₄ = 16.05 g/mol | O₂ = 32.00 g/mol | CO₂ = 44.01 g/mol",
+            prompt: "To produce 44.01 g of CO₂, how many grams of O₂ are required?",
+            answer: 64.00
+          },
+          {
+            eq: "2Mg + O₂ → 2MgO",
+            mm: "Molecular Masses: Mg = 24.31 g/mol | O₂ = 32.00 g/mol | MgO = 40.31 g/mol",
+            prompt: "To produce 80.62 g of MgO, how many grams of Mg are required?",
+            answer: 48.62
+          }
+        ]
+      }
+    };
+
+    /* =========================
+       3. STATE & DATABASE (localStorage)
+       ========================= */
+    const DB_KEY = "g11_stoichiometry_attempts_db";
+    let state = {
+      theme: "santa",
+      studentName: "",
+      studentSection: "Daniel",
+      selfieDataUrl: "",
+      currentPart: 1,
+      answers: { 1: [], 2: [], 3: [], 4: [], 5: [] },
+      completed: { 1: false, 2: false, 3: false, 4: false, 5: false },
+      scores: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
+      countedInDb: false
+    };
+
+    function getAttemptCount() {
+      return parseInt(localStorage.getItem(DB_KEY) || "0", 10);
+    }
+
+    function incrementAttemptCount() {
+      const next = getAttemptCount() + 1;
+      localStorage.setItem(DB_KEY, String(next));
+      document.getElementById("attemptCountDisplay").textContent = next;
+      return next;
+    }
+
+    /* =========================
+       4. THEME & UI HELPERS
+       ========================= */
+    const THEME_TITLES = {
+      santa: "🎅 Grade 11 Chemistry: Santa & Rudolf Stoichiometry Lab",
+      snowman: "⛄ Grade 11 Chemistry: Snowman Stoichiometry Lab",
+      chimney: "🔥 Grade 11 Chemistry: Christmas Chimney Stoichiometry Lab",
+      aurora: "🌌 Grade 11 Chemistry: Northern Aurora Stoichiometry Lab"
+    };
+
+    function applyTheme(theme) {
+      state.theme = theme;
+      document.documentElement.setAttribute("data-theme", theme);
+      document.getElementById("themeSelect").value = theme;
+      document.getElementById("themeTitle").textContent = THEME_TITLES[theme];
+    }
+
+    function getTotalScore() {
+      return [1, 2, 3, 4, 5].reduce((acc, p) => acc + state.scores[p], 0);
+    }
+
+    function allPartsCompleted() {
+      return [1, 2, 3, 4, 5].every(p => state.completed[p]);
+    }
+
+    function isMaster() {
+      return allPartsCompleted() && getTotalScore() === 25;
+    }
+
+    function anyPartCompleted() {
+      return [1, 2, 3, 4, 5].some(p => state.completed[p]);
+    }
+
+    function updateNavAndSaveButton() {
+      document.querySelectorAll(".part-tab").forEach(btn => {
+        const p = btn.dataset.part;
+        btn.classList.toggle("active", String(state.currentPart) === p);
+        if (p !== "summary") {
+          const num = Number(p);
+          btn.classList.toggle("completed", state.completed[num]);
+          btn.textContent = `Part ${num} (${state.scores[num]}/5)${state.completed[num] ? " ✓" : ""}`;
+        }
+      });
+      document.getElementById("saveProgressBtn").disabled = !anyPartCompleted();
+
+      const master = isMaster();
+      document.getElementById("selfieMasterBadge").style.display = master ? "block" : "none";
+      document.getElementById("sumMasterBadge").style.display = master ? "block" : "none";
+    }
+
+    /* =========================
+       5. RENDER PART QUESTIONS
+       ========================= */
+    function renderPart(partNum) {
+      state.currentPart = partNum;
+      document.getElementById("quizCard").classList.remove("hidden");
+      document.getElementById("summaryCard").classList.add("hidden");
+
+      const part = PARTS[partNum];
+      document.getElementById("partTitle").textContent = part.title;
+      document.getElementById("partInstructions").textContent = part.instructions;
+      document.getElementById("atomicRef").classList.toggle("hidden", !part.showRef);
+
+      const container = document.getElementById("questionsContainer");
+      container.innerHTML = "";
+
+      const isDone = state.completed[partNum];
+
+      part.questions.forEach((q, idx) => {
+        const div = document.createElement("div");
+        div.className = "question-item";
+
+        const savedVal = state.answers[partNum][idx] ?? "";
+        let feedbackHTML = "";
+
+        if (isDone) {
+          const isRight = checkAnswer(part.type, savedVal, q.answer);
+          div.classList.add(isRight ? "correct" : "incorrect");
+          feedbackHTML = `<div class="feedback-text" style="color:${isRight ? "#15803d" : "#dc2626"}">
+            ${isRight ? "✅ Correct!" : `❌ Incorrect. Correct answer: ${q.answer}`}
+          </div>`;
+        }
+
+        let inputHTML = "";
+        if (part.type === "mcq") {
+          inputHTML = `<div class="options-row">` + q.options.map(opt => `
+            <button type="button" class="option-btn ${savedVal === opt ? "selected" : ""}"
+              data-qidx="${idx}" data-val="${opt}" ${isDone ? "disabled" : ""}>${opt}</button>
+          `).join("") + `</div>`;
+        } else {
+          inputHTML = `<div style="margin-top:8px;">
+            <input type="number" step="0.01" inputmode="decimal" placeholder="Enter value (e.g. 18.02)"
+              value="${savedVal}" data-qidx="${idx}" ${isDone ? "disabled" : ""} style="width:220px;" />
+          </div>`;
+        }
+
+        div.innerHTML = `
+          <div><strong>Q${idx + 1}.</strong> <span class="eq-box">${q.eq}</span></div>
+          ${q.mm ? `<div class="mm-info">${q.mm}</div>` : ""}
+          <div>${q.prompt}</div>
+          ${inputHTML}
+          ${feedbackHTML}
+        `;
+        container.appendChild(div);
+      });
+
+      // Attach listeners
+      if (!isDone) {
+        container.querySelectorAll(".option-btn").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const qidx = Number(btn.dataset.qidx);
+            state.answers[partNum][qidx] = btn.dataset.val;
+            btn.parentElement.querySelectorAll(".option-btn").forEach(b => b.classList.remove("selected"));
+            btn.classList.add("selected");
+          });
+        });
+
+        container.querySelectorAll("input[type='number']").forEach(inp => {
+          inp.addEventListener("input", () => {
+            const qidx = Number(inp.dataset.qidx);
+            state.answers[partNum][qidx] = inp.value;
+          });
+        });
+      }
+
+      document.getElementById("submitPartBtn").classList.toggle("hidden", isDone);
+      const nextBtn = document.getElementById("nextPartBtn");
+      nextBtn.classList.toggle("hidden", !isDone);
+      nextBtn.textContent = partNum < 5 ? `➡️ Go to Part ${partNum + 1}` : "🏆 View Summary";
+
+      updateNavAndSaveButton();
+    }
+
+    function checkAnswer(type, userVal, correctVal) {
+      if (type === "mcq") return userVal === correctVal;
+      const num = parseFloat(userVal);
+      if (isNaN(num)) return false;
+      return Math.abs(num - correctVal) <= 0.05;
+    }
+
+    function submitCurrentPart() {
+      const partNum = state.currentPart;
+      const part = PARTS[partNum];
+      let score = 0;
+
+      part.questions.forEach((q, idx) => {
+        if (checkAnswer(part.type, state.answers[partNum][idx], q.answer)) score++;
+      });
+
+      state.scores[partNum] = score;
+      state.completed[partNum] = true;
+
+      if (allPartsCompleted() && !state.countedInDb) {
+        incrementAttemptCount();
+        state.countedInDb = true;
+      }
+
+      if (isMaster()) {
+        playSound("master");
+      } else if (score >= 4) {
+        playSound("badge");
+      } else if (score > 0) {
+        playSound("correct");
+      } else {
+        playSound("wrong");
+      }
+
+      renderPart(partNum);
+    }
+
+    /* =========================
+       6. SUMMARY & PNG EXPORT
+       ========================= */
+    function renderSummary() {
+      state.currentPart = "summary";
+      document.getElementById("quizCard").classList.add("hidden");
+      document.getElementById("summaryCard").classList.remove("hidden");
+
+      const total = getTotalScore();
+      const passed = total >= 20;
+      const master = isMaster();
+
+      document.getElementById("sumName").textContent = state.studentName.trim() || "Unnamed Student";
+      document.getElementById("sumSection").textContent = state.studentSection;
+      document.getElementById("sumScore").textContent = `${total} / 25`;
+      document.getElementById("sumAttempts").textContent = getAttemptCount();
+
+      const statusEl = document.getElementById("sumStatus");
+      statusEl.textContent = passed ? "PASSED" : "NOT YET PASSED (Need 20/25)";
+      statusEl.className = `summary-status ${passed ? "status-passed" : "status-failed"}`;
+
+      // Selfie in summary
+      const sumImg = document.getElementById("sumSelfieImg");
+      const sumPh = document.getElementById("sumSelfiePlaceholder");
+      if (state.selfieDataUrl) {
+        sumImg.src = state.selfieDataUrl;
+        sumImg.classList.remove("hidden");
+        sumPh.classList.add("hidden");
+      } else {
+        sumImg.classList.add("hidden");
+        sumPh.classList.remove("hidden");
+      }
+
+      // Breakdown
+      const ul = document.getElementById("sumBreakdown");
+      ul.innerHTML = [1, 2, 3, 4, 5].map(p =>
+        `<li><strong>Part ${p}:</strong> ${state.scores[p]} / 5 ${state.completed[p] ? "✅" : "(Not completed)"}</li>`
+      ).join("");
+
+      // Badges
+      const badgesDiv = document.getElementById("sumBadges");
+      badgesDiv.innerHTML = "";
+      [1, 2, 3, 4, 5].forEach(p => {
+        if (state.completed[p]) {
+          const span = document.createElement("span");
+          span.className = "badge-pill";
+          span.textContent = PARTS[p].badge;
+          badgesDiv.appendChild(span);
+        }
+      });
+
+      if (master) {
+        const m = document.createElement("span");
+        m.className = "badge-pill master";
+        m.textContent = "🏆 MASTER STOICHIOMETRIST (25/25 Perfect!)";
+        badgesDiv.appendChild(m);
+      }
+
+      if (!badgesDiv.children.length) {
+        badgesDiv.innerHTML = `<span style="color:var(--text-muted); font-size:0.9rem;">Complete parts to earn badges!</span>`;
+      }
+
+      updateNavAndSaveButton();
+    }
+
+    function downloadSummaryPNG() {
+      const canvas = document.getElementById("exportCanvas");
+      const ctx = canvas.getContext("2d");
+      const W = canvas.width;
+      const H = canvas.height;
+
+      // Theme backgrounds for PNG
+      const themeColors = {
+        santa: ["#7f1d1d", "#14532d", "#fcd34d"],
+        snowman: ["#0c4a6e", "#0284c7", "#7dd3fc"],
+        chimney: ["#451a03", "#7c2d12", "#fb923c"],
+        aurora: ["#0f172a", "#065f46", "#34d399"]
+      };
+      const [c1, c2, border] = themeColors[state.theme] || themeColors.santa;
+
+      const grad = ctx.createLinearGradient(0, 0, W, H);
+      grad.addColorStop(0, c1);
+      grad.addColorStop(1, c2);
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, W, H);
+
+      // Inner white card
+      ctx.fillStyle = "#ffffff";
+      ctx.strokeStyle = border;
+      ctx.lineWidth = 6;
+      ctx.beginPath();
+      ctx.roundRect(28, 28, W - 56, H - 56, 20);
+      ctx.fill();
+      ctx.stroke();
+
+      // Header
+      ctx.fillStyle = "#1f2937";
+      ctx.font = "bold 26px -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif";
+      ctx.fillText("Grade 11 Chemistry: Stoichiometry Summary", 56, 82);
+
+      const total = getTotalScore();
+      const passed = total >= 20;
+      const master = isMaster();
+
+      ctx.font = "18px -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif";
+      ctx.fillStyle = "#374151";
+      ctx.fillText(`Student: ${state.studentName.trim() || "Unnamed Student"}`, 56, 125);
+      ctx.fillText(`Section: Grade 11 - ${state.studentSection}`, 56, 155);
+      ctx.fillText(`Total Score: ${total} / 25`, 56, 185);
+      ctx.fillText(`Activity Completed Count: ${getAttemptCount()}`, 56, 215);
+
+      // Status Pill
+      ctx.fillStyle = passed ? "#dcfce7" : "#fee2e2";
+      ctx.beginPath();
+      ctx.roundRect(56, 232, passed ? 140 : 210, 38, 19);
+      ctx.fill();
+      ctx.fillStyle = passed ? "#166534" : "#991b1b";
+      ctx.font = "bold 20px -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif";
+      ctx.fillText(passed ? "PASSED" : "NEEDS REVIEW", 76, 258);
+
+      // Part Breakdown
+      ctx.fillStyle = "#1f2937";
+      ctx.font = "bold 17px -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif";
+      ctx.fillText("Part Scores:", 56, 310);
+      ctx.font = "16px -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif";
+      [1, 2, 3, 4, 5].forEach((p, i) => {
+        ctx.fillText(`Part ${p}: ${state.scores[p]} / 5 ${state.completed[p] ? "✓" : ""}`, 56, 338 + i * 26);
+      });
+
+      // Badges
+      ctx.font = "bold 17px -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif";
+      ctx.fillText("Badges Earned:", 56, 490);
+      ctx.font = "15px -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif";
+      const earned = [1, 2, 3, 4, 5].filter(p => state.completed[p]).map(p => PARTS[p].badge);
+      if (master) earned.push("🏆 MASTER (25/25)");
+      ctx.fillStyle = "#4b5563";
+      ctx.fillText(earned.length ? earned.join("  •  ") : "None yet", 56, 518, W - 120);
+
+      // Timestamp
+      ctx.fillStyle = "#6b7280";
+      ctx.font = "13px -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif";
+      ctx.fillText(`Generated: ${new Date().toLocaleString()}`, 56, 565);
+
+      // Draw Selfie + Master Badge if available
+      const finishDownload = () => {
+        const link = document.createElement("a");
+        const safeName = (state.studentName.trim() || "student").replace(/[^a-z0-9]/gi, "_");
+        link.download = `Stoichiometry_Summary_${safeName}_${state.studentSection}.png`;
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      };
+
+      const cx = 720, cy = 190, r = 95;
+      if (state.selfieDataUrl) {
+        const img = new Image();
+        img.onload = () => {
+          ctx.save();
+          ctx.beginPath();
+          ctx.arc(cx, cy, r, 0, Math.PI * 2);
+          ctx.closePath();
+          ctx.clip();
+          ctx.drawImage(img, cx - r, cy - r, r * 2, r * 2);
+          ctx.restore();
+
+          ctx.strokeStyle = border;
+          ctx.lineWidth = 5;
+          ctx.beginPath();
+          ctx.arc(cx, cy, r, 0, Math.PI * 2);
+          ctx.stroke();
+
+          if (master) drawMasterBadgeOnCanvas(ctx, cx, cy + r - 12);
+          finishDownload();
+        };
+        img.src = state.selfieDataUrl;
+      } else {
+        ctx.fillStyle = "#e2e8f0";
+        ctx.beginPath();
+        ctx.arc(cx, cy, r, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = "#64748b";
+        ctx.font = "bold 16px sans-serif";
+        ctx.fillText("No Selfie", cx - 36, cy + 6);
+        if (master) drawMasterBadgeOnCanvas(ctx, cx, cy + r - 12);
+        finishDownload();
+      }
+    }
+
+    function drawMasterBadgeOnCanvas(ctx, x, y) {
+      ctx.fillStyle = "#f59e0b";
+      ctx.strokeStyle = "#ffffff";
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.roundRect(x - 62, y - 18, 124, 34, 17);
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "bold 15px -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif";
+      ctx.fillText("🏆 MASTER", x - 44, y + 5);
+    }
+
+    /* =========================
+       7. CAMERA & SELFIE CAPTURE
+       ========================= */
+    let mediaStream = null;
+    const videoEl = document.getElementById("cameraVideo");
+    const selfieImg = document.getElementById("selfieImg");
+    const selfiePh = document.getElementById("selfiePlaceholder");
+
+    function setSelfie(dataUrl) {
+      state.selfieDataUrl = dataUrl;
+      selfieImg.src = dataUrl;
+      selfieImg.classList.remove("hidden");
+      selfiePh.classList.add("hidden");
+      videoEl.classList.add("hidden");
+      if (mediaStream) {
+        mediaStream.getTracks().forEach(t => t.stop());
+        mediaStream = null;
+      }
+      document.getElementById("captureBtn").classList.add("hidden");
+    }
+
+    document.getElementById("startCameraBtn").addEventListener("click", async () => {
+      try {
+        mediaStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
+        videoEl.srcObject = mediaStream;
+        videoEl.classList.remove("hidden");
+        selfieImg.classList.add("hidden");
+        selfiePh.classList.add("hidden");
+        document.getElementById("captureBtn").classList.remove("hidden");
+      } catch (err) {
+        alert("Camera access unavailable. You can use 'Upload Photo' instead.");
+      }
+    });
+
+    document.getElementById("captureBtn").addEventListener("click", () => {
+      const c = document.createElement("canvas");
+      c.width = 320;
+      c.height = 320;
+      const ctx = c.getContext("2d");
+      const size = Math.min(videoEl.videoWidth, videoEl.videoHeight);
+      const sx = (videoEl.videoWidth - size) / 2;
+      const sy = (videoEl.videoHeight - size) / 2;
+      ctx.drawImage(videoEl, sx, sy, size, size, 0, 0, 320, 320);
+      setSelfie(c.toDataURL("image/png"));
+      playSound("correct");
+    });
+
+    document.getElementById("uploadSelfieInput").addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => setSelfie(reader.result);
+      reader.readAsDataURL(file);
+    });
+
+    /* =========================
+       8. SAVE & LOAD PROGRESS FILE
+       ========================= */
+    document.getElementById("saveProgressBtn").addEventListener("click", () => {
+      if (!anyPartCompleted()) return;
+      const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      const safeName = (state.studentName.trim() || "student").replace(/[^a-z0-9]/gi, "_");
+      a.href = url;
+      a.download = `Stoichiometry_Progress_${safeName}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      playSound("correct");
+    });
+
+    document.getElementById("loadProgressInput").addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const loaded = JSON.parse(reader.result);
+          if (!loaded || !loaded.answers || !loaded.completed) throw new Error("Invalid file");
+          state = { ...state, ...loaded };
+          applyTheme(state.theme || "santa");
+          document.getElementById("studentName").value = state.studentName || "";
+          document.getElementById("studentSection").value = state.studentSection || "Daniel";
+          if (state.selfieDataUrl) setSelfie(state.selfieDataUrl);
+          if (state.currentPart === "summary") renderSummary();
+          else renderPart(Number(state.currentPart) || 1);
+          playSound("badge");
+        } catch {
+          alert("Could not load file. Please select a valid saved progress JSON file.");
+        }
+      };
+      reader.readAsText(file);
+    });
+
+    /* =========================
+       9. EVENT LISTENERS & INIT
+       ========================= */
+    document.getElementById("themeSelect").addEventListener("change", e => applyTheme(e.target.value));
+    document.getElementById("soundToggle").addEventListener("click", e => {
+      soundEnabled = !soundEnabled;
+      e.target.textContent = soundEnabled ? "🔊 Sound: ON" : "🔇 Sound: OFF";
+    });
+
+    document.getElementById("studentName").addEventListener("input", e => state.studentName = e.target.value);
+    document.getElementById("studentSection").addEventListener("change", e => state.studentSection = e.target.value);
+
+    document.querySelectorAll(".part-tab").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const p = btn.dataset.part;
+        if (p === "summary") renderSummary();
+        else renderPart(Number(p));
+      });
+    });
+
+    document.getElementById("submitPartBtn").addEventListener("click", submitCurrentPart);
+    document.getElementById("nextPartBtn").addEventListener("click", () => {
+      if (state.currentPart < 5) renderPart(state.currentPart + 1);
+      else renderSummary();
+    });
+
+    document.getElementById("downloadSummaryBtn").addEventListener("click", downloadSummaryPNG);
+    document.getElementById("resetActivityBtn").addEventListener("click", () => {
+      if (!confirm("Start a fresh attempt? Your saved device attempt count will remain.")) return;
+      state.answers = { 1: [], 2: [], 3: [], 4: [], 5: [] };
+      state.completed = { 1: false, 2: false, 3: false, 4: false, 5: false };
+      state.scores = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+      state.countedInDb = false;
+      renderPart(1);
+    });
+
+    // Initialize
+    document.getElementById("attemptCountDisplay").textContent = getAttemptCount();
+    applyTheme("santa");
+    renderPart(1);
+  </script>
+</body>
+</html>
